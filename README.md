@@ -1,6 +1,6 @@
 # Nootbook server with Java / Spring Boot
 simple notebook server that can execute pieces of code in an interpreter using Spring Boot technology
-* Preserve the state of the variables
+* Preserve the state of variables
 * Allow multi-sessions and multi-interpreters
 
 ## Background
