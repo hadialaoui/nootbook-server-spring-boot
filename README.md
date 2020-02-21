@@ -12,19 +12,24 @@ Interactive notebooks are experiencing a rise in popularity. Notebooks offer an 
   
 ## Usage 
  - The `/execute` endpoint that accepts a JSON object with this format:
-  `{
+  ```json
+  {
     "code": "%[interpreterName][whitespace][code]",
     "sessionId": "string"
-  }`
+  }
+  ```
   
  - returns a json object. The object has the following format 
-  `{
+  ```json
+  {
     "result":  "string"
-  } `
-
+  }
+ ```
   - if there is an exception, the response has the following format : 
- ` {
+ ```json
+ {
     "code":  "string",
     "message":  "string",
     "details":  "string"
-  } `
+  }
+  ````
