@@ -33,3 +33,9 @@ Interactive notebooks are experiencing a rise in popularity. Notebooks offer an 
     "details":  "string"
   }
   ````
+  ## Technologies
+  - Spring 4 and Spring boot 1.5
+  - Jython standlone 2.7
+  - Junit 4
+  
+  
