@@ -80,6 +80,43 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
   			assertEquals(200, status);
   			assertEquals("{\"result\":\"8\\r\\n\"}", result.getResponse().getContentAsString());
    	}
+    
+    @Test
+   	public void interpreterPythonWithSessionTest() throws Exception {
+   		 boolean sessionIsEnable = notebookServerService.sessionModeIsEnable();
+   		assumeTrue(sessionIsEnable);
+		UserRequest request = new UserRequest();
+   		request.setCode("%python a=5");
+   		request.setSessionId("4444");
+   		 MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.post(InterpreterConstants.ResourcePaths.BASE_PATH)
+   				 .contentType(MediaType.APPLICATION_JSON_VALUE).content(objectmapper.writeValueAsString(request)))
+   	                .andReturn();
+   		 int status = result.getResponse().getStatus();
+   			assertEquals(200, status);
+   			assertEquals("{\"result\":\"\"}", result.getResponse().getContentAsString());
+
+   		//test with other id session 
+		request.setCode("%python print a+3");
+		request.setSessionId("5555");
+  		  result = this.mockMvc.perform(MockMvcRequestBuilders.post(InterpreterConstants.ResourcePaths.BASE_PATH)
+  				 .contentType(MediaType.APPLICATION_JSON_VALUE).content(objectmapper.writeValueAsString(request)))
+  	                .andReturn();
+  		  status = result.getResponse().getStatus();
+  			assertEquals(400, status);
+  			assertEquals(ReturnCode.ERROR_PYTHON_PROCESS.getMessage(), result.getResolvedException().getMessage());
+
+  		//test the same id session
+  			request.setCode("%python print a+3");
+  			request.setSessionId("4444");
+		 result = this.mockMvc.perform(MockMvcRequestBuilders.post(InterpreterConstants.ResourcePaths.BASE_PATH)
+  				 .contentType(MediaType.APPLICATION_JSON_VALUE).content(objectmapper.writeValueAsString(request)))
+  	                .andReturn();
+  		  status = result.getResponse().getStatus();
+  			assertEquals(200, status);
+  			assertEquals("{\"result\":\"8\\r\\n\"}", result.getResponse().getContentAsString());
+
+
+   	}
     @Test
 	public void errorParsingCodeTest() throws Exception {
 		 UserRequest request = new UserRequest();

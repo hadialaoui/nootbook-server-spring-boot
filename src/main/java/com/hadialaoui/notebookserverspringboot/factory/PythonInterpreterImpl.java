@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.hadialaoui.notebookserverspringboot.exceptions.technical.PythonInterpreterException;
@@ -24,20 +23,26 @@ import lombok.Setter;
 @Component
 public class PythonInterpreterImpl extends Interpreter{
 	
-	private PythonInterpreter interpreter = new PythonInterpreter();
+	private PythonInterpreter interpreter;
+	private ByteArrayOutputStream outputStream;
 	
+	public PythonInterpreterImpl() {
+		this.interpreter = new PythonInterpreter();
+	    this.outputStream = new ByteArrayOutputStream();
+	}
 	
 	@Override
-	public InterpreterResult execute(String code) {
+	public synchronized InterpreterResult execute(String code) {
 		InterpreterResult result = new InterpreterResult();
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		
 
 		try {
-			interpreter.setOut(out);
-			interpreter.setErr(out);
+			interpreter.setOut(this.getOutputStream());
+			interpreter.setErr(this.getOutputStream());
 			interpreter.exec(code);
-			out.flush();
-			result.setResult(out.toString());
+			this.getOutputStream().flush();
+			result.setResult(this.getOutputStream().toString());
+			this.getOutputStream().reset();
 			
 		} catch (PyException | IOException e) {
 			e.printStackTrace();
@@ -58,5 +63,7 @@ public class PythonInterpreterImpl extends Interpreter{
 	public void close() {
 		interpreter.close();		
 	}
+
+	
 
 }
