@@ -45,10 +45,10 @@ public class PythonInterpreterImpl extends Interpreter{
 			this.getOutputStream().reset();
 			
 		} catch (PyException | IOException e) {
-			e.printStackTrace();
+			clean();
 			throw new PythonInterpreterException(e);
-
 		} catch (Exception e) {
+			clean();
 			throw new PythonInterpreterException(e);
 		}
 		return result;

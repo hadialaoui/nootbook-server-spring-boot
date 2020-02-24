@@ -31,7 +31,7 @@ public class NotebookServerServiceImpl implements NotebookServerService{
 	private InterpreterStore interpreterStore;
 	@Override
 	public InterpreterInput parseInterpreterInput(UserRequest input) {
-		if(!NotebookServerServiceImpl.isValid(input.getCode())) {
+		if(!isValid(input.getCode())) {
 			throw new ParsingCodeException();
 		}
 		InterpreterInput inputContent = new InterpreterInput();

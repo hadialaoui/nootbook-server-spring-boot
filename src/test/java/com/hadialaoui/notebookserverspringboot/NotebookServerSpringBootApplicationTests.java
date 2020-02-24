@@ -48,7 +48,7 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
     }
     
     @Test
-   	public void interpreterPythonTest() throws Exception {
+   	public void testInterpreterPython() throws Exception {
    		 UserRequest request = new UserRequest();
    		 request.setCode("%python print 3+3");
    		 MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.post(InterpreterConstants.ResourcePaths.BASE_PATH)
@@ -60,7 +60,7 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
    	}
     
     @Test
-   	public void preservingStateInterpreterPythonWithoutSessionTest() throws Exception {
+   	public void testPreservingStateInterpreterPythonWithoutSession() throws Exception {
    		 boolean sessionIsEnable = notebookServerService.sessionModeIsEnable();
    		assumeTrue(!sessionIsEnable);
 		UserRequest request = new UserRequest();
@@ -82,7 +82,7 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
    	}
     
     @Test
-   	public void interpreterPythonWithSessionTest() throws Exception {
+   	public void testInterpreterPythonWithSession() throws Exception {
    		 boolean sessionIsEnable = notebookServerService.sessionModeIsEnable();
    		assumeTrue(sessionIsEnable);
 		UserRequest request = new UserRequest();
@@ -118,7 +118,7 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
 
    	}
     @Test
-	public void errorParsingCodeTest() throws Exception {
+	public void testErrorParsingCode() throws Exception {
 		 UserRequest request = new UserRequest();
 		 request.setCode("python print 3+3");
 		 MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.post(InterpreterConstants.ResourcePaths.BASE_PATH)
@@ -130,7 +130,7 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
 	}
     
     @Test
-   	public void unknownInterpreterTest() throws Exception {
+   	public void testUnknownInterpreter() throws Exception {
    		 UserRequest request = new UserRequest();
    		 request.setCode("%kotlin print 3+3");
    		 MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.post(InterpreterConstants.ResourcePaths.BASE_PATH)
@@ -142,7 +142,7 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
    	}
     
     @Test
-   	public void errorPythonProcessTest() throws Exception {
+   	public void testErrorPythonProcess() throws Exception {
    		 UserRequest request = new UserRequest();
    		 request.setCode("%python print x+3");
    		 MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.post(InterpreterConstants.ResourcePaths.BASE_PATH)
@@ -152,7 +152,5 @@ import com.hadialaoui.notebookserverspringboot.services.NotebookServerService;
    			assertEquals(400, status);
    			assertEquals(ReturnCode.ERROR_PYTHON_PROCESS.getMessage(), result.getResolvedException().getMessage());
    	}
-    
    
-
 }
