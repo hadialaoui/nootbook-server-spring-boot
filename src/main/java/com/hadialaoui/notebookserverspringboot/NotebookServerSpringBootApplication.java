@@ -22,4 +22,6 @@ public class NotebookServerSpringBootApplication {
 	public Interpreter getPythonIntrepreter() {
 		return new PythonInterpreterImpl();
 	}
+	
+	
 }

@@ -1,5 +1,6 @@
 package com.hadialaoui.notebookserverspringboot.factory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.hadialaoui.notebookserverspringboot.exceptions.technical.UnknownInterpreterException;
@@ -12,6 +13,9 @@ import com.hadialaoui.notebookserverspringboot.exceptions.technical.UnknownInter
 @Component
 public class InterpreterFactory {
 
+	@Value("${graalVM.interpreter.enable}")
+	public boolean isGraalVMEnable;
+	
 	/**
 	 * Method to create instance of interpreter if it not exist throw an  
 	 * {@link UnknownInterpreterException}
@@ -29,7 +33,13 @@ public class InterpreterFactory {
 			
 			switch (interpreterName) {
 			case PYTHON:
-				interpreter = new PythonInterpreterImpl();
+				if(isGraalVMEnable) {
+					interpreter = new GraalVMInterpreterImpl();
+					interpreter.setName("python");
+				}else {
+					interpreter = new PythonInterpreterImpl();
+				}
+				
 				break;
 			}
 		} catch (Exception e) {

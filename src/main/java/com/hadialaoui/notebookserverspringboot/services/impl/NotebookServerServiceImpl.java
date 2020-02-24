@@ -65,6 +65,11 @@ public class NotebookServerServiceImpl implements NotebookServerService{
 		return interpreter.execute(interpreterInput.getCode());
 	}
 	
+	
+	public InterpreterResult executeWithHttpSession(InterpreterInput interpreterInput, Interpreter interpreter) {
+		return interpreter.execute(interpreterInput.getCode());
+	}
+	
 	@Override
 	public boolean sessionModeIsEnable() {
 		return enableSessions;

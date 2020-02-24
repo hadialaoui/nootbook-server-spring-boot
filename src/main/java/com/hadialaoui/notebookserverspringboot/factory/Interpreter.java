@@ -21,6 +21,8 @@ public abstract class Interpreter {
 	 * to determine expired sessions to remove their interpreters from the store
 	 */
 	private LocalDateTime updateTime;
+	
+	private String name;
 
 	/**
 	 * Method to execute code by this interpreter

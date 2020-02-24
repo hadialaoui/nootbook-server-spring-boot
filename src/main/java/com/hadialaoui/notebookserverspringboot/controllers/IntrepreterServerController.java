@@ -44,6 +44,7 @@ public class IntrepreterServerController {
 	 */
 	@PostMapping(value = InterpreterConstants.ResourcePaths.BASE_PATH)
 	public InterpreterResult execute(@RequestBody UserRequest userRequest, HttpServletResponse response){
+		
 		InterpreterInput interpreterInput =notebookServerService.parseInterpreterInput(userRequest) ;
 		InterpreterResult result  = notebookServerService.execute(interpreterInput);
 		if(!StringUtils.isEmpty(interpreterInput.getSessionId())) {
